@@ -16,7 +16,6 @@ with open('token','r',encoding='utf-8')as f:
     TOKEN = f.read()
 bot = commands.Bot(command_prefix= '/')
 
-
 @bot.event
 async def on_ready():
     logger.info('login success')
@@ -28,13 +27,13 @@ async def ping(ctx):
 @bot.command()
 async def kill(ctx):
     await ctx.send('killing now...')
-    print('killing now...')
+    logger.info('killing now...')
     await sys.exit()
 
 @bot.command()
 async def restart(ctx):
     await ctx.send('resatrt now...')
-    print('restart now...')
+    logger.info('restart now...')
     os.execl(sys.executable, os.path.abspath(__file__), os.path.abspath(__file__))
 
 @bot.event
