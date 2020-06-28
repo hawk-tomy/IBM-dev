@@ -6,8 +6,8 @@ import discord
 from discord.ext import commands
 import yaml
 
-from pack.bank.account import Account
-from pack.bank.admin import Admin
+import pack.bank.account as account
+#import pack.bank.admin as admin
 from pack.util import myfunction as MF
 
 MF.getLogger('discord', level=logging.WARNING, saveName='main.log',path='log')
@@ -20,10 +20,13 @@ bot = commands.Bot(command_prefix= '/')
 @bot.event
 async def on_ready():
     logger.info('login success')
+    account.setup(bot)
+    #admin.setup(bot)
 
-@bot.command()
-async def ping(ctx):
-    await ctx.send('pong')
+#@bot.command()
+#async def ping(ctx):
+#    await ctx.send('pong')
+#    logger.info('pong')
 
 @bot.command()
 async def kill(ctx):
@@ -44,5 +47,3 @@ async def on_command_error(ctx, error):
     raise error
 
 bot.run(TOKEN)
-User.setup(bot)
-Account.setup(bot)
