@@ -15,11 +15,6 @@ class Account(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
-    async def ping(self, ctx):
-        await ctx.send('pong')
-        logger.info('ping&pong')
-
     @commands.command(name= 'in')
     async def _in(self, ctx):
         await ctx.send('in')
@@ -29,6 +24,11 @@ class Account(commands.Cog):
     async def out(self, ctx):
         await ctx.send('out')
         logger.info('out')
+    
+    @comands.comand()
+    async def send(self, ctx):
+        await ctx.send('send')
+        logger.info('send')
 
     @commands.group()
     async def show(self, ctx):
