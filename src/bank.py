@@ -6,7 +6,8 @@ import discord
 from discord.ext import commands
 import yaml
 
-from pack.bank.user import User
+from pack.bank.account import Account
+from pack.bank.admin import Admin
 from pack.util import myfunction as MF
 
 MF.getLogger('discord', level=logging.WARNING, saveName='main.log',path='log')
@@ -44,3 +45,4 @@ async def on_command_error(ctx, error):
 
 bot.run(TOKEN)
 User.setup(bot)
+Account.setup(bot)
