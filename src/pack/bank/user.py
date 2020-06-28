@@ -8,7 +8,7 @@ from pack.util import myfunction as MF
 
 logger = logging.getLogger('bot').getChild('bank.user')
 
-class User(commands.Cog):
+class Account(commands.Cog):
 
     def __init__(self, bot):
         self.bot = bot
@@ -45,5 +45,5 @@ class User(commands.Cog):
         logger.info('log')
 
 def setup(bot):
-    bot.add_cog(User(bot))
+    bot.add_cog(Account(bot))
     logger.info('add_cog_success')
