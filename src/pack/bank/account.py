@@ -8,41 +8,60 @@ import yaml
 
 from pack.util import myfunction as MF
 
+logging.getLogger('discord')
 logger = logging.getLogger('bot').getChild(__name__)
 
 class Account(commands.Cog):
+    '''口座操作系コマンド一覧
+    テスト1
+    テスト2
+    テスト3
+    テスト4
+    '''
 
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command(name= 'in')
     async def _in(self, ctx):
+        '''入金コマンドです。
+        '''
         await ctx.send('in')
         logger.info('in')
 
     @commands.command()
     async def out(self, ctx):
+        '''出金コマンドです。
+        '''
         await ctx.send('out')
         logger.info('out')
-    
-    @comands.comand()
+
+    @commands.command()
     async def send(self, ctx):
+        '''送金コマンドです。
+        '''
         await ctx.send('send')
         logger.info('send')
 
     @commands.group()
     async def show(self, ctx):
+        '''各種データを確認できます。
+        '''
         if ctx.invoked_subcommand is None:
             await ctx.send('show')
             logger.info('show')
 
     @show.command()
     async def deposit(self, ctx):
+        '''預金額を確認できます。
+        '''
         await ctx.send('show deposit')
         logger.info('show deposit')
 
     @show.command()
     async def log(self, ctx):
+        '''ログを確認できます。
+        '''
         await ctx.send('log')
         logger.info('log')
 

@@ -1,5 +1,6 @@
 import logging
 
+logging.getLogger('discord')
 logger = logging.getLogger('bot').getChild('myfunction')
 
 def getLogger(name, level= logging.DEBUG, saveName= 'mainnoname.log',path='.'):

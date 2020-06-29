@@ -6,10 +6,11 @@ import yaml
 
 from pack.util import myfunction as MF
 
+logging.getLogger('discord')
 logger = logging.getLogger('bot').getChild(__name__)
 
 class Admin(comannds.cog):
-    
+
     def __init__(self, bot):
         self.bot = bot
 
