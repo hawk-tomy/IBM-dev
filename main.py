@@ -6,27 +6,24 @@ import discord
 from discord.ext import commands
 import yaml
 
-import pack.bank.account as account
-#import pack.bank.admin as admin
-from pack.util import myfunction as MF
+import src.bank.account as account
+import src.bank.admin as admin
+import src.util.help as help
+from src.util import myfunction as MF
 
 MF.getLogger('discord', level=logging.WARNING, saveName='main.log',path='log')
 logger = MF.getLogger('bot', saveName='main.log',path='log')
 
 with open('token','r',encoding='utf-8')as f:
     TOKEN = f.read()
-bot = commands.Bot(command_prefix= '/')
+
+bot = commands.Bot(command_prefix= '/',help_command=help.Help(),description="")
+account.setup(bot)
+admin.setup(bot)
 
 @bot.event
 async def on_ready():
     logger.info('login success')
-    account.setup(bot)
-    #admin.setup(bot)
-
-#@bot.command()
-#async def ping(ctx):
-#    await ctx.send('pong')
-#    logger.info('pong')
 
 @bot.command()
 async def kill(ctx):

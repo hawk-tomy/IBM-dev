@@ -1,18 +1,16 @@
 import logging
-import os
-import sys
 
 import discord
 from discord.ext import commands
 import yaml
 
-from pack.util import myfunction as MF
+from src.util import myfunction as MF
 
-logging.getLogger('discord')
 logger = logging.getLogger('bot').getChild(__name__)
 
 class Account(commands.Cog):
-    '''口座操作系コマンド一覧
+    '''
+    口座操作系コマンド一覧
     テスト1
     テスト2
     テスト3
@@ -24,7 +22,8 @@ class Account(commands.Cog):
 
     @commands.command(name= 'in')
     async def _in(self, ctx):
-        '''入金コマンドです。
+        '''
+        入金コマンドです。
         '''
         await ctx.send('in')
         logger.info('in')
