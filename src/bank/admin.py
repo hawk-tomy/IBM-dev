@@ -31,6 +31,14 @@ class Admin(commands.Cog):
         await ctx.send('^^')
         logger.info('niconico')
 
+    @commands.command()
+    async def test(ctx):
+        '''
+        test2
+        '''
+        await ctx.send('test')
+        logger.info('test')
+
 def setup(bot):
     bot.add_cog(Admin(bot))
     logger.info('add_cog_success')

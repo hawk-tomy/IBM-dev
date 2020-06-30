@@ -18,8 +18,8 @@ with open('token','r',encoding='utf-8')as f:
     TOKEN = f.read()
 
 bot = commands.Bot(command_prefix= '/',help_command=help.Help(),description="")
-account.setup(bot)
-admin.setup(bot)
+bot.load_extension('src.bank.account')
+bot.load_extension('src.bank.admin')
 
 @bot.event
 async def on_ready():
@@ -36,6 +36,13 @@ async def restart(ctx):
     await ctx.send('resatrt now...')
     logger.info('restart now...')
     os.execl(sys.executable, os.path.abspath(__file__), os.path.abspath(__file__))
+
+@bot.command()
+async def reload(ctx):
+    bot.reload_extension('src.bank.account')
+    bot.reload_extension('src.bank.admin')
+    logger.info('reload succes')
+    await ctx.send('reload succes')
 
 @bot.event
 async def on_command_error(ctx, error):

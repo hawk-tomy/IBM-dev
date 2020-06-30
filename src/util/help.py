@@ -64,7 +64,7 @@ class Help(commands.HelpCommand):
         return enclosure + adjusted_content + enclosure
 
     async def send_bot_help(self,mapping):
-        embed = discord.Embed(title="helpコマンド",color=self.color)
+        embed = discord.Embed(title="helpコマンド", color=self.color)
         if self.description:
             embed.description = self.description
         for cog in mapping:
