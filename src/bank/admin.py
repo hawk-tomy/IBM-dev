@@ -15,29 +15,29 @@ class Admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
-    async def ping(self, ctx):
+    @commands.group()
+    async def show(self, ctx):
+        '''show
         '''
-        test
-        '''
-        await ctx.send('pong')
-        logger.info('ping')
+        if ctx.invoked_subcommand is None:
+            await ctx.send('show')
+            logger.info('show')
 
-    @commands.command()
-    async def niconico(self, ctx):
+    @commands.group()
+    async def settings(self, ctx):
+        '''settings
         '''
-        niconico
-        '''
-        await ctx.send('^^')
-        logger.info('niconico')
+        if ctx.invoked_subcommand is None:
+            await ctx.send('settings')
+            logger.info('settings')
 
-    @commands.command()
-    async def test(ctx):
+    @commands.group()
+    async def bank(self, ctx):
+        '''bank
         '''
-        test2
-        '''
-        await ctx.send('test')
-        logger.info('test')
+        if ctx.invoked_subcommand is None:
+            await ctx.send('bank')
+            logger.info('bank')
 
 def setup(bot):
     bot.add_cog(Admin(bot))
