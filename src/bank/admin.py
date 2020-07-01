@@ -39,6 +39,13 @@ class Admin(commands.Cog):
             await ctx.send('bank')
             logger.info('bank')
 
+    @commands.group()
+    @commands.has_permissions(administrator=True)
+    async def make(self,ctx)
+        if ctx,invoked_subcommand is None:
+            await ctx.send('make')
+            logger.info('make')
+
 def setup(bot):
     bot.add_cog(Admin(bot))
     logger.info('add_cog_success')
