@@ -6,8 +6,6 @@ import discord
 from discord.ext import commands
 import yaml
 
-import src.bank.account as account
-import src.bank.admin as admin
 import src.util.help as help
 from src.util import myfunction as MF
 
