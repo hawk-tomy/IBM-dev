@@ -30,8 +30,11 @@ def getLogger(name, level= logging.DEBUG, saveName= 'mainnoname.log',path='.'):
     def_logger.addHandler(fhw)
     return def_logger
 
-def getChild(root,child,file):
+def getChild(root, child, level= logging.NOTSET, file= 'mainnoname.log'):
     def_logger= logging.getLogger(root).getChild(child)
-    fh = logging.FileHandler(file)
+    def_logger.setLevel(level)
+    fh= logging.FileHandler(file)
     fh.setFormatter(formatter)
-    
+    fh.setLevel(logging.NOTSET)
+    def_logger.addHandler(fh)
+    return def_logger
