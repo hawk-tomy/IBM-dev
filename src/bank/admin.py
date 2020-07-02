@@ -16,14 +16,6 @@ class Admin(commands.Cog):
         self.bot = bot
 
     @commands.group()
-    async def show(self, ctx):
-        '''show
-        '''
-        if ctx.invoked_subcommand is None:
-            await ctx.send('show')
-            logger.info('show')
-
-    @commands.group()
     async def settings(self, ctx):
         '''settings
         '''
@@ -39,11 +31,24 @@ class Admin(commands.Cog):
             await ctx.send('bank')
             logger.info('bank')
 
+    @bank.group()
+    async def show(self, ctx):
+        '''show
+        '''
+        if ctx.invoked_subcommand is None:
+            await ctx.send('show')
+            logger.info('show')
+
     @bank.command()
     @commands.has_permissions(administrator=True)
-    async def make(self, ctx, *, arg)
+    async def make(self, ctx, *, arg):
         await ctx.send('make : '+ str(arg))
         logger.info('make :' + str(arg))
+
+    @make.error
+    async def make_error(self, ctx, error):
+        if isinstance(error, commands.MissingPermissions):
+            await ctx.send('コマンドを実行するための権限が足りません')
 
 def setup(bot):
     bot.add_cog(Admin(bot))
