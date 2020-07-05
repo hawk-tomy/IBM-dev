@@ -6,7 +6,8 @@ import yaml
 
 from src.util import myfunction as MF
 
-logger = logging.getLogger('bot').getChild(__name__)
+root= logging.getLogger('bot')
+logger = root.getChild(__name__)
 
 class Account(commands.Cog):
     '''
