@@ -10,18 +10,15 @@ from src.util import myfunction as MF
 
 logger = logging.getLogger('bot').getChild(__name__)
 
-with open('data/data.yaml','r',encoding='utf-8')as f:
-    data = yaml.safe_load(f)
-
-with open('data/config.cfg','r',encoding='utf-8')as f:
-    config = yaml.safe_load(f)
-
 class Admin(commands.Cog):
     '''
     Admin
     '''
-    def __init__(self, bot):
+    def __init__(self, bot, data, config):
+        logger.info('add_cog_success')
         self.bot = bot
+        self.data = data
+        self.config = config
 
     @commands.group()
     async def settings(self, ctx):
@@ -53,9 +50,9 @@ class Admin(commands.Cog):
         if re.search(r'[\\/:*?"<>|]',arg):
             await ctx.send('使用不可能な文字が含まれています。`\/:*?"<>|`以外を使用してください。')
         else:
-            data['bank_index'] = {ctx.guild.id: str(arg)}
+            self.data['bank_index'] = {ctx.guild.id: str(arg)}
             with open('data/data.yaml','w',encoding='utf-8')as f:
-                yaml.dump(data, f, encoding='utf-8', allow_unicode=True)
+                yaml.dump(self.data, f, encoding='utf-8', allow_unicode=True)
             os.mkdir('data/' + str(arg))
 
             await ctx.send('make : '+ str(arg))
@@ -68,4 +65,3 @@ class Admin(commands.Cog):
 
 def setup(bot):
     bot.add_cog(Admin(bot))
-    logger.info('add_cog_success')
