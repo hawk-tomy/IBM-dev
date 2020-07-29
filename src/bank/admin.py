@@ -29,9 +29,17 @@ class Admin(commands.Cog):
             logger.info('settings')
 
     @commands.group()
-    async def bank(self, ctx):
-        '''bank
+    async def setup(self, ctx):
+        '''setup
         '''
+        if ctx.invoked_subcommand is None:
+            await ctx.send('<<setup tools help>>')
+            logger.info('setup')
+
+    @commands.group()
+    async def bank(self,ctx):
+        """bank
+        """
         if ctx.invoked_subcommand is None:
             await ctx.send('bank')
             logger.info('bank')
@@ -44,24 +52,30 @@ class Admin(commands.Cog):
             await ctx.send('show')
             logger.info('show')
 
-    @bank.command()
+    @setup.command()
+    @commands.has_permissions(administrator=True)
+    async def start(self,ctx)
+        """setup start
+        """
+        await ctx.send('<<setup tools>>¥nstart setup bot. please use command "'+ctx.prefix+'setup make"')
+        logger.info('start_setup')
+
+    @setup.command()
     @commands.has_permissions(administrator=True)
     async def make(self, ctx, *, arg):
-        if re.search(r'[\\/:*?"<>|]',arg):
-            await ctx.send('使用不可能な文字が含まれています。`\/:*?"<>|`以外を使用してください。')
-        else:
-            self.data['bank_index'] = {ctx.guild.id: str(arg)}
-            with open('data/data.yaml','w',encoding='utf-8')as f:
-                yaml.dump(self.data, f, encoding='utf-8', allow_unicode=True)
-            os.mkdir('data/' + str(arg))
+        """setup make bank
+        """
+        if ctx.guild.id in list(self.data['bank'].keys()):
+            ctx.send('このサーバーに銀行は設立されています。')
+            return
+        self.data['bank'] += {ctx.guild.id: {'full_bank_name': str(arg)}}
+        with open('data/data.yaml','w',encoding='utf-8')as f:
+            yaml.dump(self.data, f, encoding='utf-8')
 
-            await ctx.send('make : '+ str(arg))
-            logger.info('make :' + str(arg))
+        await ctx.send('「'+str(arg)+'」を作成しました。¥nNext command is setup set shortname')
+        logger.info('setup_make_bank - bank_name :' + str(arg) + 'usedby' +userinfo)
 
     @make.error
     async def make_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             await ctx.send('コマンドを実行するための権限が足りません')
-
-def setup(bot):
-    bot.add_cog(Admin(bot))
