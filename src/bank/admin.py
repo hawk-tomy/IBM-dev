@@ -72,10 +72,23 @@ class Admin(commands.Cog):
         with open('data/data.yaml','w',encoding='utf-8')as f:
             yaml.dump(self.data, f, encoding='utf-8')
 
-        await ctx.send('「'+str(arg)+'」を作成しました。¥nNext command is setup set shortname')
-        logger.info('setup_make_bank - bank_name :' + str(arg) + 'usedby' +userinfo)
+        await ctx.send('「'+str(arg)+'」を作成しました。¥nNext command is setup shortname')
+        logger.info('setup_make_bank - bank_name :' + str(arg) + 'usedby' +userinfo())
+
+    @setup.command()
+    @commands.has_permissions(administrator=True)
+    async def shortname(self, ctx, *, arg):
+        if not ctx.guild.id in data['bank']:
+            await ctx.send('This Guild Not Has Bank.\nPrease Used Command "setup make [bank name]"')
+            return
+        data['bank'][ctx.guild.id]['shortname'] = args
+        await ctx.send(arg + 'に設定しました。')
+        logger.info('setup_set_short_name_is_succes Usedby : ' + userinfo())
 
     @make.error
     async def make_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             await ctx.send('コマンドを実行するための権限が足りません')
+
+def userinfo(ctx):
+    retrun ctx.author.name + ' - ' + ctx.author.id
