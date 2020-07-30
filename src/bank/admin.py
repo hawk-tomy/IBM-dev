@@ -6,22 +6,19 @@ import discord
 from discord.ext import commands
 import yaml
 
-from src.util import myfunction as MF
+from ..util import MF
 
 logger = logging.getLogger('bot').getChild(__name__)
-
-with open('data/data.yaml','r',encoding='utf-8')as f:
-    data = yaml.safe_load(f)
-
-with open('data/config.cfg','r',encoding='utf-8')as f:
-    config = yaml.safe_load(f)
 
 class Admin(commands.Cog):
     '''
     Admin
     '''
-    def __init__(self, bot):
+    def __init__(self, bot, data, config):
+        logger.info('add_cog_success')
         self.bot = bot
+        self.data = data
+        self.config = config
 
     @commands.group()
     async def settings(self, ctx):
@@ -32,9 +29,17 @@ class Admin(commands.Cog):
             logger.info('settings')
 
     @commands.group()
-    async def bank(self, ctx):
-        '''bank
+    async def setup(self, ctx):
+        '''setup
         '''
+        if ctx.invoked_subcommand is None:
+            await ctx.send('<<setup tools help>>')
+            logger.info('setup')
+
+    @commands.group()
+    async def bank(self,ctx):
+        """bank
+        """
         if ctx.invoked_subcommand is None:
             await ctx.send('bank')
             logger.info('bank')
@@ -47,25 +52,43 @@ class Admin(commands.Cog):
             await ctx.send('show')
             logger.info('show')
 
-    @bank.command()
+    @setup.command()
+    @commands.has_permissions(administrator=True)
+    async def start(self,ctx)
+        """setup start
+        """
+        await ctx.send('<<setup tools>>¥nstart setup bot. please use command "'+ctx.prefix+'setup make"')
+        logger.info('start_setup Usedby :' + userinfo(ctx))
+
+    @setup.command()
     @commands.has_permissions(administrator=True)
     async def make(self, ctx, *, arg):
-        if re.search(r'[\\/:*?"<>|]',arg):
-            await ctx.send('使用不可能な文字が含まれています。`\/:*?"<>|`以外を使用してください。')
-        else:
-            data['bank_index'] = {ctx.guild.id: str(arg)}
-            with open('data/data.yaml','w',encoding='utf-8')as f:
-                yaml.dump(data, f, encoding='utf-8', allow_unicode=True)
-            os.mkdir('data/' + str(arg))
+        """setup make bank
+        """
+        if ctx.guild.id in list(self.data['bank'].keys()):
+            ctx.send('このサーバーに銀行は設立されています。')
+            return
+        self.data['bank'] += {ctx.guild.id: {'full_bank_name': str(arg)}}
+        with open('data/data.yaml','w',encoding='utf-8')as f:
+            yaml.dump(self.data, f, encoding='utf-8')
 
-            await ctx.send('make : '+ str(arg))
-            logger.info('make :' + str(arg))
+        await ctx.send('「'+str(arg)+'」を作成しました。¥nNext command is setup shortname')
+        logger.info('setup_make_bank - bank_name :' + str(arg) + 'usedby' +userinfo(ctx))
+
+    @setup.command()
+    @commands.has_permissions(administrator=True)
+    async def shortname(self, ctx, *, arg):
+        if not ctx.guild.id in data['bank']:
+            await ctx.send('This Guild Not Has Bank.\nPrease Used Command "setup make [bank name]"')
+            return
+        data['bank'][ctx.guild.id]['shortname'] = args
+        await ctx.send(arg + 'に設定しました。')
+        logger.info('setup_set_short_name_is_succes Usedby : ' + userinfo(ctx))
 
     @make.error
     async def make_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             await ctx.send('コマンドを実行するための権限が足りません')
 
-def setup(bot):
-    bot.add_cog(Admin(bot))
-    logger.info('add_cog_success')
+def userinfo(ctx):
+    return ctx.author.name + ' _ ' + str(ctx.author.id)

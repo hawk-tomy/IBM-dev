@@ -4,14 +4,13 @@ import discord
 from discord.ext import commands
 import yaml
 
-from src.util import myfunction as MF
+from ..util import MF
 
 root= logging.getLogger('bot')
 logger = root.getChild(__name__)
 
 class Account(commands.Cog):
-    '''
-    口座操作系コマンド一覧
+    '''口座操作系コマンド一覧
     テスト1
     テスト2
     テスト3
@@ -19,6 +18,7 @@ class Account(commands.Cog):
     '''
 
     def __init__(self, bot):
+        logger.info('add_cog_success')
         self.bot = bot
 
     @commands.command(name= 'in')
@@ -67,4 +67,3 @@ class Account(commands.Cog):
 
 def setup(bot):
     bot.add_cog(Account(bot))
-    logger.info('add_cog_success')
