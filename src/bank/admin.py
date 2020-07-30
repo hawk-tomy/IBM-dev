@@ -58,7 +58,7 @@ class Admin(commands.Cog):
         """setup start
         """
         await ctx.send('<<setup tools>>¥nstart setup bot. please use command "'+ctx.prefix+'setup make"')
-        logger.info('start_setup')
+        logger.info('start_setup Usedby :' + userinfo(ctx))
 
     @setup.command()
     @commands.has_permissions(administrator=True)
@@ -73,7 +73,7 @@ class Admin(commands.Cog):
             yaml.dump(self.data, f, encoding='utf-8')
 
         await ctx.send('「'+str(arg)+'」を作成しました。¥nNext command is setup shortname')
-        logger.info('setup_make_bank - bank_name :' + str(arg) + 'usedby' +userinfo())
+        logger.info('setup_make_bank - bank_name :' + str(arg) + 'usedby' +userinfo(ctx))
 
     @setup.command()
     @commands.has_permissions(administrator=True)
@@ -83,7 +83,7 @@ class Admin(commands.Cog):
             return
         data['bank'][ctx.guild.id]['shortname'] = args
         await ctx.send(arg + 'に設定しました。')
-        logger.info('setup_set_short_name_is_succes Usedby : ' + userinfo())
+        logger.info('setup_set_short_name_is_succes Usedby : ' + userinfo(ctx))
 
     @make.error
     async def make_error(self, ctx, error):
@@ -91,4 +91,4 @@ class Admin(commands.Cog):
             await ctx.send('コマンドを実行するための権限が足りません')
 
 def userinfo(ctx):
-    retrun ctx.author.name + ' - ' + ctx.author.id
+    return ctx.author.name + ' _ ' + str(ctx.author.id)
