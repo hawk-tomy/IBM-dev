@@ -7,9 +7,9 @@ from discord.ext import commands
 import yaml
 
 import src.util.help as help
-from src.util import myfunction as MF
-from src.bank.account import Account
-from src.bank.admin import Admin
+import src.util as MF
+import src.bank
+import src.IBM
 
 MF.getLogger('discord', level=logging.WARNING, saveName='main.log',path='log')
 logger = MF.getLogger('bot', saveName='main.log',path='log')
