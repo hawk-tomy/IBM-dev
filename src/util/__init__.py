@@ -1,2 +1,2 @@
-from .help import help
+from .help import Help
 from . import myfunction as MF
