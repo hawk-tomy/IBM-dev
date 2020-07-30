@@ -4,7 +4,7 @@ import discord
 from discord.ext import commands
 import yaml
 
-from src.util import myfunction as MF
+from ..util import MF
 
 root= logging.getLogger('bot')
 logger = root.getChild(__name__)
