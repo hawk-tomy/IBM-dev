@@ -6,7 +6,7 @@ import discord
 from discord.ext import commands
 import yaml
 
-from src import help, MF, Account, Admin
+from src import Help, MF, Account, Admin
 
 MF.getLogger('discord', level=logging.WARNING, saveName='main.log',path='log')
 logger = MF.getLogger('bot', saveName='main.log',path='log')
@@ -18,7 +18,7 @@ with open('data/config.cfg','r',encoding='utf-8')as f:
 with open('token','r',encoding='utf-8')as f:
     TOKEN = f.read()
 
-bot = commands.Bot(command_prefix= '/',help_command=help.Help(),description="")
+bot = commands.Bot(command_prefix= '/',help_command=Help(),description="")
 bot.add_cog(Account(bot))
 bot.add_cog(Admin(bot, data, config))
 
