@@ -6,7 +6,7 @@ import discord
 from discord.ext import commands
 import yaml
 
-from src.util import myfunction as MF
+from ..util import MF
 
 logger = logging.getLogger('bot').getChild(__name__)
 
