@@ -6,7 +6,7 @@ import discord
 from discord.ext import commands
 import yaml
 
-from ..util import MF
+from ..util import MF, userinfo
 
 logger = logging.getLogger('bot').getChild(__name__)
 
@@ -54,11 +54,11 @@ class Admin(commands.Cog):
 
     @setup.command()
     @commands.has_permissions(administrator=True)
-    async def start(self,ctx)
+    async def start(self,ctx):
         """setup start
         """
-        await ctx.send('<<setup tools>>¥nstart setup bot. please use command "'+ctx.prefix+'setup make"')
-        logger.info('start_setup Usedby :' + userinfo(ctx))
+        await ctx.send('<<setup tools>>\nstart setup bot. please use command `'+ctx.prefix+'setup make`')
+        logger.info('start_setup Usedby: ' + userinfo(ctx))
 
     @setup.command()
     @commands.has_permissions(administrator=True)
@@ -72,23 +72,20 @@ class Admin(commands.Cog):
         with open('data/data.yaml','w',encoding='utf-8')as f:
             yaml.dump(self.data, f, encoding='utf-8')
 
-        await ctx.send('「'+str(arg)+'」を作成しました。¥nNext command is setup shortname')
-        logger.info('setup_make_bank - bank_name :' + str(arg) + 'usedby' +userinfo(ctx))
+        await ctx.send('「'+str(arg)+'」を作成しました。\nNext command is `'+ctx.prefix+'setup shortname [short name]`')
+        logger.info('setup_make_bank - bank_name :' + str(arg) + 'Usedby: ' +userinfo(ctx))
 
     @setup.command()
     @commands.has_permissions(administrator=True)
     async def shortname(self, ctx, *, arg):
         if not ctx.guild.id in data['bank']:
-            await ctx.send('This Guild Not Has Bank.\nPrease Used Command "setup make [bank name]"')
+            await ctx.send('This Guild Not Has Bank.\nPrease Used Command `'+ctx.prefix+'setup make [bank name]`')
             return
         data['bank'][ctx.guild.id]['shortname'] = args
-        await ctx.send(arg + 'に設定しました。')
-        logger.info('setup_set_short_name_is_succes Usedby : ' + userinfo(ctx))
+        await ctx.send(arg + 'に設定しました。\nNext command is `'+ctx.prefix+'setup MainCurrency [Currency name]`')
+        logger.info('setup_set_short_name_is_succes Usedby: ' + userinfo(ctx))
 
     @make.error
     async def make_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
             await ctx.send('コマンドを実行するための権限が足りません')
-
-def userinfo(ctx):
-    return ctx.author.name + ' _ ' + str(ctx.author.id)

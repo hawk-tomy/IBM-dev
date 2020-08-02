@@ -6,7 +6,7 @@ import discord
 from discord.ext import commands
 import yaml
 
-from src import Help, MF, Account, Admin
+from src import Help, MF, Account, Admin, userinfo
 
 MF.getLogger('discord', level=logging.WARNING, saveName='main.log',path='log')
 logger = MF.getLogger('bot', saveName='main.log',path='log')

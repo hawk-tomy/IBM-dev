@@ -38,3 +38,6 @@ def getChild(root, child, level= logging.NOTSET, file= 'mainnoname.log'):
     fh.setLevel(logging.NOTSET)
     def_logger.addHandler(fh)
     return def_logger
+
+def userinfo(ctx):
+    return ctx.author.name + ' _ ' + str(ctx.author.id)
