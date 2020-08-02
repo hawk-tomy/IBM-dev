@@ -79,11 +79,23 @@ class Admin(commands.Cog):
     @commands.has_permissions(administrator=True)
     async def shortname(self, ctx, *, arg):
         if not ctx.guild.id in data['bank']:
-            await ctx.send('This Guild Not Has Bank.\nPrease Used Command `'+ctx.prefix+'setup make [bank name]`')
+            await ctx.send('This Guild Not Has Bank.\nPrease Use Command `'+ctx.prefix+'setup make [bank name]`')
             return
-        data['bank'][ctx.guild.id]['shortname'] = args
+        data['bank'][ctx.guild.id]['shortname'] = arg
         await ctx.send(arg + 'に設定しました。\nNext command is `'+ctx.prefix+'setup MainCurrency [Currency name]`')
         logger.info('setup_set_short_name_is_succes Usedby: ' + userinfo(ctx))
+
+    @setup.command()
+    @commands.has_permissions(administrator=True)
+    async def MainCurrency(self, ctx, *, arg):
+        if not ctx.guild.id in data['bank']:
+            await ctx.send('This Guild Not Has Bank.\nPrease Use Command `'+ctx.prefix+'setup make [bank name]`')
+            return
+        elif not 'shortname' in data['bank'][ctx.guild.id]:
+            await ctx.send('This Bank Not Set Short Name.\nPrease Use Command `'+ctx.prefix+'setup shortname [shortname]`')
+            return
+        data['bank'][ctx.guild.id]['Currency']['main']['name'] = arg
+        await ctx.send(arg + 'に設定しました。\nOptional Next command is `'+ctx.prefix'setup SubCurrency [Currency name]`(last)')
 
     @make.error
     async def make_error(self, ctx, error):
