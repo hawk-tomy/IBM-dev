@@ -97,6 +97,25 @@ class Admin(commands.Cog):
         data['bank'][ctx.guild.id]['Currency']['main']['name'] = arg
         await ctx.send(arg + 'に設定しました。\nOptional Next command is `'+ctx.prefix'setup SubCurrency [Currency name]`(last)')
 
+    @setup.command
+    @commands.has_perrmission(administrator=True)
+    async def SubCurrency(self, ctx, *, arg):
+        if not ctx.guild.id in data['bank']:
+            await ctx.send('This Guild Not Has Bank.\nPrease Use Command `'+ctx.prefix+'setup make  [bank name]`')
+            return
+        elif not 'shortname' in data['bank'][ctx.guild.id]:
+            await ctx.send('This Bank Not Set Short Name.\nPrease Use Command `'+ctx.prefix+'setup shortname [shortname]`')
+            return
+        elif not 'currency' in data['bank'][ctx.guild.id]:
+            await ctx.send('This Bank Not Set Main Currency.\nPrease Use Command`'+ctx.prefix+'setup MainCurrency [Currency Name]`')
+            return
+        elif 'sub' in data['bank'][ctx.guid.id]['Currency']:
+            await ctx.send('This Bank is already Set Sub Currency')
+            return
+        else:
+            data'bank'][ctx.guild.id]['currency']['sub']['name'] = arg
+            await ctx.send(arg + 'に設定しました。\nSet Up Is Ended')
+
     @make.error
     async def make_error(self, ctx, error):
         if isinstance(error, commands.MissingPermissions):
