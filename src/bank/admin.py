@@ -95,7 +95,7 @@ class Admin(commands.Cog):
             await ctx.send('This Bank Not Set Short Name.\nPrease Use Command `'+ctx.prefix+'setup shortname [shortname]`')
             return
         data['bank'][ctx.guild.id]['Currency']['main']['name'] = arg
-        await ctx.send(arg + 'に設定しました。\nOptional Next command is `'+ctx.prefix'setup SubCurrency [Currency name]`(last)')
+        await ctx.send(arg + 'に設定しました。\nOptional Next command is `'+ctx.prefix+'setup SubCurrency [Currency name]`(last)')
 
     @setup.command
     @commands.has_perrmission(administrator=True)
@@ -113,7 +113,7 @@ class Admin(commands.Cog):
             await ctx.send('This Bank is already Set Sub Currency')
             return
         else:
-            data'bank'][ctx.guild.id]['currency']['sub']['name'] = arg
+            data['bank'][ctx.guild.id]['currency']['sub']['name'] = arg
             await ctx.send(arg + 'に設定しました。\nSet Up Is Ended')
 
     @make.error
