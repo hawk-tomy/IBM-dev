@@ -4,7 +4,7 @@ import discord
 from discord.ext import commands
 import yaml
 
-from ..util import MF, userinfo
+from . import MF, userinfo, data, config
 
 root= logging.getLogger('bot')
 logger = root.getChild(__name__)

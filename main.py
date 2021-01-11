@@ -6,15 +6,11 @@ import discord
 from discord.ext import commands
 import yaml
 
-from src import Help, MF, Account, Admin, userinfo
+from src import Help, MF, Account, Admin, userinfo, config, data
 
 MF.getLogger('discord', level=logging.WARNING, saveName='main.log',path='log')
 logger = MF.getLogger('bot', saveName='main.log',path='log')
 
-with open('data/data.yaml','r',encoding='utf-8')as f:
-    data = yaml.safe_load(f)
-with open('data/config.cfg','r',encoding='utf-8')as f:
-    config = yaml.safe_load(f)
 with open('token','r',encoding='utf-8')as f:
     TOKEN = f.read()
 
