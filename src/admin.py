@@ -6,7 +6,7 @@ import discord
 from discord.ext import commands
 import yaml
 
-from ..util import MF, userinfo
+from . import MF, userinfo, data, config
 
 logger = logging.getLogger('bot').getChild(__name__)
 
@@ -17,8 +17,6 @@ class Admin(commands.Cog):
     def __init__(self, bot, data, config):
         logger.info('add_cog_success')
         self.bot = bot
-        self.data = data
-        self.config = config
 
     @commands.group()
     async def settings(self, ctx):
